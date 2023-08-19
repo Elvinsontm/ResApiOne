@@ -1,15 +1,21 @@
 import express from "express";
-import {Movie} from './movies.js'
 import crypto from 'node:crypto'
 import cors from 'cors'
 import {ValidarParametros, ValidarMovie} from './ValidadDatosPost.mjs'
+
+//import el movies.json creando un metodo createRequire desde 0 ya que en ESmodule no lo trae y se usa este en este caso porque es 
+import { createRequire } from "node:module";//mas rapido cargar grandes cantidades de dastos al no parse el json se hora tiempo
+const require = createRequire(import.meta.url)
+const Movie = require('./movies.json')
+
 
 const app = express();
 
 app.use(cors({  // Para darle acceso a la ruta al brauser para evitar el Cors "Cross-Origin Resource Sharing usando el paquete cors".
   origin:(origin,callback) =>{
     const ACCEPTED_ORIGINS =[
-      'http://127.0.0.1:5500'
+      'http://127.0.0.1:5500',
+      'http://172.28.80.1:8080'
     ]
 
     if(ACCEPTED_ORIGINS.includes(origin)){
@@ -25,7 +31,7 @@ app.use(cors({  // Para darle acceso a la ruta al brauser para evitar el Cors "C
 app.use((req, res, next) => {//Middleware, si es app.use('/.lala',(req, res, next) => solo se ejecutara en es endpoint y tabien comodin como /.lala*, tambien para un method en concreto : app.get
 
   res.setHeader("X-Powered-By", "MyApp");
-  // Para darle acceso a la ruta al brauser para evitar el Cors "Cross-Origin Resource Sharing".
+  // Para darle acceso a la ruta al brouser para evitar el Cors "Cross-Origin Resource Sharing".
   // const origin = req.headers.origin;
   // if (ACCEPTED_ORIGINS.includes(origin) || !origin) {
   //   res.header('Access-Control-Allow-Origin', "http://127.0.0.1:5500"); // Cambia '*' por el valor que necesites

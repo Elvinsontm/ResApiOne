@@ -1,4 +1,4 @@
-const Movie = [{
+[{
   "id": "dcdd0fad-a94c-4810-8acc-5f108d3b18c3",
   "title": "The Shawshank Redemption",
   "year": 1994,
@@ -149,4 +149,3 @@ const Movie = [{
   "rate": 7.8
 }]
 
-module.exports = {Movie}
